@@ -5,7 +5,7 @@ import unittest
 
 class FixtureFailureTest(unittest.TestCase):
     def test_fixture_failure(self) -> None:
-        self.fail("deterministic fixture failure")
+        self.fail("deterministic fixture failure!")
 
 
 if __name__ == "__main__":
