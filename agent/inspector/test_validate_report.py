@@ -70,6 +70,12 @@ class ValidateReportTests(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(ReportValidationError):
                 validate_report(report)
 
+    def test_rejects_evidence_as_a_single_string(self) -> None:
+        report = json.loads(json.dumps(VALID_REPORT))
+        report["hypotheses"][0]["evidence"] = "bounded log reference"
+        with self.assertRaises(ReportValidationError):
+            validate_report(report)
+
     def test_rejects_non_standard_json_and_duplicate_keys(self) -> None:
         with self.assertRaises(ReportValidationError):
             parse_report("NaN")
