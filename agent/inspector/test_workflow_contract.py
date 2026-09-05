@@ -96,7 +96,9 @@ class InspectorWorkflowContractTests(unittest.TestCase):
             "Do not checkout a branch",
             "Do not execute commands, read or write files, edit, commit, push",
             "This is not a literal example: do not copy placeholder values",
+            "Do not return TypeScript, comments, or this interface; return one plain JSON object",
             "failure: an object with exactly type, job, step, and test",
+            "evidence must be a non-empty JSON array of strings",
         ):
             self.assertIn(phrase, prompt)
 
