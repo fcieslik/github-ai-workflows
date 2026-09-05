@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github-ai-workflows.example/schemas/triage-report.json",
+  "title": "TriageReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "needs_fix",
+    "confidence",
+    "failure",
+    "hypotheses",
+    "recommended_action"
+  ],
+  "properties": {
+    "needs_fix": {
+      "type": "boolean"
+    },
+    "confidence": {
+      "$ref": "#/$defs/confidence"
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "job", "step", "test"],
+      "properties": {
+        "type": {
+          "const": "test_failure"
+        },
+        "job": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "step": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "test": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description", "confidence", "evidence"],
+        "properties": {
+          "description": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "confidence": {
+            "$ref": "#/$defs/confidence"
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          }
+        }
+      }
+    },
+    "recommended_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "description"],
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "description": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    }
+  }
+}
